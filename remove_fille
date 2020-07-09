@@ -1,0 +1,10 @@
+import os
+import re
+
+file =r'D:\software\apache-jmeter-5.2.1\bin'
+
+files = os.listdir(file)
+for i in files:
+    if re.findall('\d*\.unknown|json',i):
+        print(os.path.join(file,re.search('\d*\.(unknown|json)',i).group(0)))
+        os.remove(os.path.join(file,re.search('\d*\.(unknown|json)',i).group(0)))
