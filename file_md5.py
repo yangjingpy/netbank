@@ -3,7 +3,7 @@
 import hashlib
 import zipfile
 import os
-
+import re
 
 class FileMd5():
     def __init__(self,file_name,zip_name):
@@ -32,18 +32,33 @@ class FileMd5():
         with open(self.md5_file_name,'w') as f:
             f.write(md5_file)
 
-
+    @property
     def file_zip(self):
         '''
         Compressed file
         :return:
         '''
+###compression: ZIP_STORED (no compression), ZIP_DEFLATED (requires zlib),
+### ZIP_BZIP2 (requires bz2) or ZIP_LZMA (requires lzma).
+###ZIP_STOREED：只是作为一种存储，实际上并未压缩
+
+###ZIP_DEFLATED：用的是gzip压缩算法
+
+###ZIP_BZIP2：用的是bzip2压缩算法
+
+###ZIP_LZMA：用的是lzma压缩算法
+
+
         self._get_file_md5()
-        with zipfile.ZipFile(self.zip_name,'w') as zipf:
+        with zipfile.ZipFile(self.zip_name,'w',compression=zipfile.ZIP_DEFLATED) as zipf:
             zipf.write(self.file_name,self.file_name2)
             zipf.write(self.md5_file_name,'md5.txt')
 
 
 if __name__=='__main__':
-    file_name = r'C:\Users\tester\Downloads\CPE201-image-v3.0.0_beta1-19-g4e3beea-20200218.bin'
-    FileMd5(file_name,'test.zip').file_zip()
+    FILE_PATH = os.path.abspath(r'C:\Users\tester\Downloads\V501-3.2.0-8-g8fce013-20200518_DEBUG.bin')
+    ## get the name of docx
+    res1 = re.match('(.+)\.bin', os.path.basename(FILE_PATH))
+    ## group() is all,group(1) is first
+    zip_name = res1.group(1)+'.zip'
+    FileMd5(FILE_PATH,zip_name).file_zi
