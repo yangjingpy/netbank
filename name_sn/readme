@@ -1,0 +1,1 @@
+使用ssh(paramiko库）登录vpe，然后切换到root用户下，执行swanctl --list-sas，然后根据隧道的id,查找test环境的etcd，然后找出该id对应的sn
