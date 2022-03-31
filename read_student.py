@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-#__author__ = 'yangjing'
+#__author__ = 'yangjing1'
 import re
 
 PATH = r'C:\Users\tester\Desktop\sd.txt'
